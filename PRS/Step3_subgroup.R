@@ -1,4 +1,4 @@
-# newmetaSWE should include at least the prs you calculated and the case_control indicator. 
+# newmetaSWE should include at least the prs you calculated and the diagnosis indicator. 
 
 subgroup_newmetaSWE <- newmetaSWE %>% 
   mutate(
