@@ -1,0 +1,58 @@
+#!/bin/bash
+# This script performs a multi-tissue Transcriptome-Wide Association Study (TWAS)
+# [cite_start]using MulTiXcan.py[cite: 2]. It aggregates gene-level associations across multiple
+# [cite_start]predicted expression tissues to test for association with a given phenotype[cite: 2].
+# [cite_start]This example uses a binary case-control phenotype[cite: 2].
+
+# --- 1. SETUP: Activate Conda Environment ---
+# [cite_start]Activate the conda environment that has the necessary tools (e.g., imlabtools)[cite: 2].
+echo "Activating Conda environment..."
+[cite_start]conda activate imlabtools [cite: 2]
+
+
+# --- 2. CONFIGURATION: Set File Paths and Parameters ---
+# Define all input/output paths and other parameters here for easy modification.
+
+# Input Files and Folders
+[cite_start]MULTIXCAN_SCRIPT_PATH="./software/MulTiXcan.py" [cite: 2]
+[cite_start]EXPRESSION_FOLDER="/path/to/predicted_expression_folder/" [cite: 2]
+[cite_start]PHENOTYPE_FILE="/path/to/phenotype_and_covariate_file.txt" [cite: 2]
+[cite_start]COVARIATE_FILE="/path/to/phenotype_and_covariate_file.txt" [cite: 2] # Can be the same as the phenotype file
+
+# Output File
+[cite_start]OUTPUT_FILE="/path/to/output/multixcan/twas_results_case_control.txt" [cite: 2]
+
+# Parameters
+# [cite_start]Regex pattern to find expression files and capture the tissue name[cite: 2].
+# [cite_start]The '(.*)' part is essential for identifying the tissue from the filename[cite: 2].
+[cite_start]EXPRESSION_PATTERN="SWE6628_MASHR_(.*)_predict.txt" [cite: 2]
+[cite_start]PHENOTYPE_COLUMN="case_control" [cite: 2]
+[cite_start]COVARIATES_LIST="sex X1 X2 X3 X4 X5" [cite: 2] # Space-separated list of covariate column names
+
+
+# --- 3. EXECUTION: Run MulTiXcan.py ---
+echo "Starting MulTiXcan analysis for phenotype: ${PHENOTYPE_COLUMN}..."
+
+python3 ${MULTIXCAN_SCRIPT_PATH} \
+  # [cite_start]Folder containing the predicted gene expression files from PrediXcan[cite: 2].
+  --expression_folder ${EXPRESSION_FOLDER} \
+  # Pattern to identify expression files. [cite_start]'(.*)' captures the tissue name[cite: 2].
+  --expression_pattern "${EXPRESSION_PATTERN}" \
+  # [cite_start]File containing the phenotype data[cite: 2].
+  --input_phenos_file ${PHENOTYPE_FILE} \
+  # [cite_start]Column name in the phenotype file to be used as the outcome variable[cite: 2].
+  --input_phenos_column ${PHENOTYPE_COLUMN} \
+  # [cite_start]File containing the covariate data[cite: 2].
+  --covariates_file ${COVARIATE_FILE} \
+  # [cite_start]Space-separated list of covariate column names to include in the model[cite: 2].
+  --covariates ${COVARIATES_LIST} \
+  # [cite_start]Specifies the regression mode ('logistic' for binary traits like case-control)[cite: 2].
+  --mode logistic \
+  # [cite_start]Sets the level of detail for logging messages[cite: 2].
+  --verbosity 6 \
+  # [cite_start]Path for the final output file with gene-based association statistics[cite: 2].
+  --output ${OUTPUT_FILE} \
+  # [cite_start]A flag that causes the script to stop immediately if an error occurs[cite: 2].
+  --throw
+
+echo "MulTiXcan analysis complete. Results saved to ${OUTPUT_FILE}"

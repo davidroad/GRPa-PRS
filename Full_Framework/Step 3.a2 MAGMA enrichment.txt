@@ -1,0 +1,22 @@
+my_genes.txt
+GENE   P
+GENE1  1.2e-4
+GENE2  0.45
+GENE3  0.003
+
+
+#Competitive test (→ .gsa.out):
+
+magma \
+  --gene-results my_genes.txt \
+  --set-annot genesets.gmt \
+  --out gsa_comp
+
+
+#Self-contained test (→ .gsa.self.out):
+
+magma \
+  --gene-results my_genes.txt \
+  --set-annot genesets.gmt \
+  --out gsa_self \
+  --self-contained

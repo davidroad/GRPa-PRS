@@ -1,0 +1,55 @@
+#!/bin/bash
+# This script predicts individual-level gene expression (GReX) from genotype data
+# using a pre-trained PrediXcan/MetaXcan model (e.g., MASHR).
+# It takes a VCF file of individual genotypes and a prediction model database as input.
+# This example uses the Brain Hippocampus tissue model. 
+
+# --- 1. SETUP: Activate Conda Environment ---
+# Activate the conda environment that has the necessary tools (e.g., imlabtools). 
+echo "Activating Conda environment..."
+conda activate imlabtools
+
+
+# --- 2. CONFIGURATION: Set File Paths and Parameters ---
+# Define all input/output paths and other parameters here for easy modification.
+
+# Input Files
+PREDICT_SCRIPT_PATH="./software/Predict.py"
+MODEL_DB_PATH="./eqtl/mashr/mashr_Brain_Hippocampus.db" 
+VCF_FILE="/path/to/genotypes/SWE_eur_afterQC.vcf" 
+LIFTOVER_CHAIN="/path/to/liftover_chains/hg19ToHg38.over.chain.gz" 
+
+# Output Files
+PREDICTION_OUTPUT_PATH="/path/to/prediction_output/SWE6628_MASHR_Brain_Hippocampus_predict.txt" 
+SUMMARY_OUTPUT_PATH="/path/to/prediction_output/SWE6628_MASHR_Brain_Hippocampus_summary.txt" 
+
+# Parameters
+TISSUE_NAME="Brain_Hippocampus"
+
+
+# --- 3. EXECUTION: Run PrediXcan's Predict.py ---
+echo "Starting gene expression prediction for tissue: ${TISSUE_NAME}..."
+
+python3 ${PREDICT_SCRIPT_PATH} \
+  # Path to the predictive model database for the tissue of interest. 
+  --model_db_path ${MODEL_DB_PATH} \
+  # Column name for the SNP identifier in the model database. 
+  --model_db_snp_key varID \
+  # Path to the VCF file with individual-level genotypes. 
+  --vcf_genotypes ${VCF_FILE} \
+  # Mode for VCF processing (use "genotyped" for observed genotypes). 
+  --vcf_mode genotyped \
+  # Path to a chain file for lifting over genome coordinates (e.g., hg19 to hg38). 
+  --liftover ${LIFTOVER_CHAIN} \
+  # Specifies the format for matching SNPs between the VCF and the model. 
+  --on_the_fly_mapping METADATA "chr{}_{}_{}_{}_b38" \
+  # Output file for the predicted gene expression matrix (individuals x genes). 
+  --prediction_output ${PREDICTION_OUTPUT_PATH} \
+  # Output file for a summary of the prediction results. 
+  --prediction_summary_output ${SUMMARY_OUTPUT_PATH} \
+  # Sets the level of detail for logging messages. 
+  --verbosity 9 \
+  # A flag that causes the script to stop immediately if an error occurs. 
+  --throw
+
+echo "Prediction complete. Output written to ${PREDICTION_OUTPUT_PATH}"
