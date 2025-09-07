@@ -11,4 +11,6 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC10327215/
 **Illustration of six strata comparisons and genetic factor distribution in GRPas**
 
 Polygenic risk scores (PRS) are tools used to evaluate an individual’s susceptibility to polygenic diseases based on their genetic profile. A considerable proportion of people carry a high genetic risk but evade the disease. On the other hand, some individuals with a low risk of eventually developing the disease. We hypothesized that unknown counterfactors might be involved in reversing the PRS prediction, which might provide new insights into the pathogenesis, prevention, and early intervention of diseases.
+
+
 <img width="920" height="774" alt="image" src="https://github.com/user-attachments/assets/ca72b473-3b44-4a88-b05c-1cb1cd7e91cc" />
