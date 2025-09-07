@@ -2,8 +2,7 @@
 ## GRPa-PRS: A risk stratification method to identify genetically-regulated pathways in polygenic diseases
 https://pmc.ncbi.nlm.nih.gov/articles/PMC10327215/ 
 
-![Uploading image.png…]()
-
+<img width="1098" height="716" alt="image" src="https://github.com/user-attachments/assets/384b211f-35c5-468e-a48d-d32d03adbbf2" />
 
 
 
