@@ -1,4 +1,4 @@
-# Please the full workflow folder 
+# Please use the full workframe folder 
 # GRPa-PRS Workflow using SCZ Dataset as an Example
 
 ### **Step 0: Data Preparation for PRS**
@@ -39,3 +39,4 @@
 ### **Step 4.b: Orthogonality Test**
 
 * Conduct a TOST equivalence test to confirm that the PRS (from Step 1.b) and significant pathway GSVA scores (from Step 3.b1) are independent (orthogonal).
+
